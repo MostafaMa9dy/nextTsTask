@@ -1,25 +1,39 @@
 import Link from "next/link";
-import React from "react";
+ 
+interface Post {
+  _id: number;
+  title: string;
+  content: string;
+  createdAt : string;
+  updatedAt : string;
+}
 
 export default async function page() {
   try {
     const response = await fetch(
-      "https://dummyjson.com/posts?select=title,id",
+      "http://localhost:3000/api/notes/",
+      // "https://dummyjson.com/posts?select=title,id",
       {
         cache: "no-store",
       },
     );
- 
 
-    const DataPosts = await response.json();
+    const DataPosts: Post[] = await response.json();
     console.log(DataPosts);
 
     return (
       <div>
         <ul>
-          {DataPosts.posts.map((post: any) => (
-            <li key={post.id}>
-              <Link href={`/posts/${post.id}`}> {post.title}</Link>
+          {DataPosts.map((post) => (
+            <li key={post._id}>
+              <Link href={`/posts/${post._id}`}>
+                <h2>{post._id}</h2>
+                <h2>{post.title}</h2>
+                <p>{post.content}</p>
+                <p>{post.createdAt}</p>
+                <p>{post.updatedAt}</p>
+                <hr />
+              </Link>
             </li>
           ))}
         </ul>
@@ -27,6 +41,6 @@ export default async function page() {
     );
   } catch (err) {
     console.log(err);
-      throw new Error("Posts not found");
+    throw new Error("Posts not found");
   }
 }
