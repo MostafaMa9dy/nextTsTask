@@ -1,38 +1,33 @@
+import { connectDB } from "@/lib/db";
 import Link from "next/link";
- 
-interface Post {
-  _id: number;
-  title: string;
-  content: string;
-  createdAt : string;
-  updatedAt : string;
-}
+import Note from "@/models/Note";
+import { Post } from "@/types/post";
 
-export default async function page() {
+
+//direct to database
+export default async function Page() {
   try {
-    const response = await fetch(
-      "http://localhost:3000/api/notes/",
-      // "https://dummyjson.com/posts?select=title,id",
-      {
-        cache: "no-store",
-      },
-    );
+    // const response = await fetch(
+    //   "http://localhost:3000/api/notes/",
+    //   // "https://dummyjson.com/posts?select=title,id",
+    //   {
+    //     cache: "no-store",
+    //   },
+    // );
+    // const DataPosts: Post[] = await response.json();
 
-    const DataPosts: Post[] = await response.json();
-    console.log(DataPosts);
+    await connectDB();
+    const DataPosts = await Note.find().lean();
 
     return (
-      <div>
+      <div className="p-5">
+        <h1 className="text-xl font-bold mb-4">All Posts</h1>
         <ul>
-          {DataPosts.map((post) => (
-            <li key={post._id}>
+          {DataPosts.map((post: any) => (
+            <li key={post._id.toString()} className="border mb-3 p-3">
               <Link href={`/posts/${post._id}`}>
-                <h2>{post._id}</h2>
-                <h2>{post.title}</h2>
+                <h2 className="font-bold text-blue-600">{post.title}</h2>
                 <p>{post.content}</p>
-                <p>{post.createdAt}</p>
-                <p>{post.updatedAt}</p>
-                <hr />
               </Link>
             </li>
           ))}

@@ -16,7 +16,7 @@ export default function Navbar() {
             <Link href="/posts">Posts</Link>
           </li>
           <li>
-            <Link href="/create">Create</Link>
+            <Link href="/posts/create">Create</Link>
           </li>
         </ul>
       </div>

@@ -1,9 +1,6 @@
 import { connectDB } from "@/lib/db";
 import Note from "@/models/Note";
 
-
-
-
  export async function GET() {
   await connectDB();
 
@@ -11,9 +8,6 @@ import Note from "@/models/Note";
 
   return Response.json(notes);
 }
-
-
-
 
  export async function POST(req) {
   await connectDB();

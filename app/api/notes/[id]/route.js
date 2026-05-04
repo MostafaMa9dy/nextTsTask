@@ -11,6 +11,10 @@ import Note from "@/models/Note";
   return Response.json(note);
 }
 
+
+
+
+
  export async function PUT(req, context) {
   await connectDB();
 
@@ -26,6 +30,9 @@ import Note from "@/models/Note";
 
   return Response.json(updatedNote);
 }
+
+
+
 
  export async function DELETE(req, context) {
   await connectDB();
